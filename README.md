@@ -8,7 +8,7 @@ Original theme: https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/minimal.zs
 Git handling theme: https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/mortalscumbag.zsh-theme
 
 ## What did I add ?
-Shape color is now depending on the value returned by the last command.The time it took to execute is displayed on the right in cyan
+Shape color is now depending on the value returned by the last command.The time it took to execute is displayed on the right in cyan. Furthermore pwd displays up to the two parent folders.
 
 From mortalscumbag theme, I imported git prompt handling. I add a custom prompt with a separator and the number of
 files for each category: staged, unstaged, untracked and unmerged. Morevover, I used spectrum colors (to see them,
