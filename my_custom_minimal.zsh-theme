@@ -11,8 +11,8 @@ ZSH_THEME_HG_PROMPT_CLEAN=$ZSH_THEME_GIT_PROMPT_CLEAN
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[white]%}["
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[white]%}]%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_SEPARATOR="%{$reset_color%} | "
-ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[magenta]%}↑%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[green]%}↓%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[magenta]%}↑"
+ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[green]%}↓"
 ZSH_THEME_GIT_PROMPT_STAGED="%{$FG[002]%}+"
 ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$FG[208]%}!"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[white]%}?"
@@ -29,12 +29,14 @@ function my_vcs_status() {
   else
     tester=$(git rev-parse --git-dir 2> /dev/null) || return
     # branch ahead
-    if $(echo "$(git log origin/$(git_current_branch)..HEAD 2> /dev/null)" | grep '^commit' &> /dev/null); then
-      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD"
+    if $(echo "$(git log origin/$(git_current_branch)..HEAD 2> /dev/null)" | command grep '^commit' &> /dev/null); then
+      NB=$(echo "$(git log origin/$(git_current_branch)..HEAD 2> /dev/null)" | command grep '^commit' &> /dev/null | command wc -l)
+      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD$NB%{$reset_color%}"
     fi
     # branch behind
-    if $(echo "$(git log HEAD..origin/$(git_current_branch) 2> /dev/null)" | grep '^commit' &> /dev/null); then
-      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND"
+    if $(echo "$(git log HEAD..origin/$(git_current_branch) 2> /dev/null)" | command grep '^commit' &> /dev/null); then
+      NB=$(echo "$(git log HEAD..origin/$(git_current_branch) 2> /dev/null)" | grep '^commit' &> /dev/null | command wc -l)
+      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND$NB%{$reset_color%}"
     fi
     STATUS="$STATUS$(git_current_branch)"
     # staged
