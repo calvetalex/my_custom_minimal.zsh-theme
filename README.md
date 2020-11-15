@@ -2,6 +2,7 @@
 Custom minimal theme for zsh. 
 
 Original theme: https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/minimal.zsh-theme
+
 Git handling theme: https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/mortalscumbag.zsh-theme
 
 ## What did I add ?
