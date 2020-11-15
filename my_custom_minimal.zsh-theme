@@ -31,14 +31,18 @@ function my_vcs_status() {
     # branch ahead
     if $(echo "$(git log origin/$(git_current_branch)..HEAD 2> /dev/null)" | command grep '^commit' &> /dev/null); then
       NB=$(echo "$(git log origin/$(git_current_branch)..HEAD 2> /dev/null)" | command grep '^commit' &> /dev/null | command wc -l)
-      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD$NB%{$reset_color%} $ZSH_THEME_GIT_PROMPT_SEPARATOR"
+      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD$NB%{$reset_color%}"
     fi
     # branch behind
     if $(echo "$(git log HEAD..origin/$(git_current_branch) 2> /dev/null)" | command grep '^commit' &> /dev/null); then
       NB=$(echo "$(git log HEAD..origin/$(git_current_branch) 2> /dev/null)" | grep '^commit' &> /dev/null | command wc -l)
-      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND$NB%{$reset_color%} $ZSH_THEME_GIT_PROMPT_SEPARATOR"
+      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND$NB%{$reset_color%}"
     fi
-    STATUS="$(git_current_branch)$STATUS"
+    STATUS="$(git_current_branch) $STATUS"
+    # separator
+    if [[ $(git status --short | wc -l) -ne 0 ]]; then
+      STATUS="$STATUS $ZSH_THEME_GIT_PROMPT_SEPARATOR"
+    fi
     # staged
     if $(echo "$INDEX" | command grep -E -e '^(D[ M]|[MARC][ MD]) ' &> /dev/null); then
       NB=$(echo "$INDEX" | command grep -E -e '^(D[ M]|[MARC][ MD]) ' &> /dev/null | command wc -l)
